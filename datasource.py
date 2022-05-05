@@ -76,6 +76,7 @@ class DataSource:
         ax.set_xlabel("$\mathregular{\lambda}$ /nm")
         ax.set_ylabel("$\mathregular{\epsilon}$ /$\mathregular{L mol^{-1}cm^{-1}}$")
         plt.savefig("out/titration.png", dpi=1200)
+        plt.savefig("out/titration.svg", dpi=1200)
 
     def calculatePH(self, corr: pd.DataFrame, idx: int) -> float:
         sorets_y = corr.iloc[idx].iloc[1::2]
@@ -105,4 +106,5 @@ class DataSource:
         plt.scatter(pt, y)
         plt.annotate(np.round(pt, 2), xy=(pt, y), textcoords="offset points", xytext=(5, 0), fontsize=9)
         plt.savefig("out/pH.png", dpi=1200)
+        plt.savefig("out/pH.svg", dpi=1200)
         return pt
