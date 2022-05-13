@@ -49,8 +49,8 @@ class DataSource:
         num_spc = int(df.shape[1])
         corr = df.copy(deep=True)
         max = 0
-        idx = corr[corr.iloc[:, 0].lt(400.0)].index[0]
-        idx2 = corr[corr.iloc[:, 0].lt(800.0)].index[0]
+        idx = corr[corr.iloc[:, 2].lt(400.0)].index[0]
+        idx2 = corr[corr.iloc[:, 2].lt(800.0)].index[0]
         self.q = corr.iloc[:idx2, 1].idxmax()
         soret = corr.iloc[:idx, 1].idxmax()
         self.soret = soret
@@ -60,6 +60,7 @@ class DataSource:
             corr.iloc[:, i+1] = corr.iloc[:, i+1]/fac
             if max < corr.iloc[:, i+1][soret]:
                 max = corr.iloc[:, i+1][soret]
+            
         self.max = max
         return corr
 
@@ -77,8 +78,9 @@ class DataSource:
         ax.set_ylabel("$\mathregular{\epsilon}$ /$\mathregular{L mol^{-1}cm^{-1}}$")
         plt.savefig("out/titration.png", dpi=1200)
         plt.savefig("out/titration.svg", dpi=1200)
+        return fig, ax
 
-    def calculatePH(self, corr: pd.DataFrame, idx: int) -> float:
+    def calculatePH(self, corr: pd.DataFrame, idx: int, offset: int = 0) -> float:
         sorets_y = corr.iloc[idx].iloc[1::2]
         # drop first two entries
         x_mlTFA = np.arange(0, len(sorets_y), 1)
@@ -100,7 +102,7 @@ class DataSource:
         plt.plot(x, sorets_y_sm, label="smoothed data")
         der = np.gradient(sorets_y_sm, x)
         der2 = np.gradient(der, x)
-        idx = np.where(np.diff(np.sign(der2[~np.isnan(der2)])))[0][-1]
+        idx = np.where(np.diff(np.sign(der2[~np.isnan(der2)])))[0][-1-offset]
         y = sorets_y[idx]
         pt = x[idx]
         plt.scatter(pt, y)
