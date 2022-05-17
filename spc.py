@@ -26,7 +26,7 @@ def getMax(y: pd.Series):
 # Paths
 paths = args.files
 labels = args.labels
-hasLabels = len(labels) != 0
+hasLabels = labels != None
 normalize = not args.nonorm
 df = pd.DataFrame()
 for file in paths:
@@ -77,3 +77,4 @@ if normalize:
 else:
     ax.set_ylabel("rel. Abs.")
 plt.savefig("out/img.png", dpi=1200)
+plt.savefig("out/img.svg", dpi=1200)
