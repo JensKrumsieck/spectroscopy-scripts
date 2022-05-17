@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
+
+
 def cm_to_inch(value):
     return value/2.54
+
 
 def applySettings():
     plt.style.use(['science', 'nature', 'no-latex'])
@@ -16,9 +19,13 @@ def applySettings():
     plt.rcParams['figure.facecolor'] = 'white'
     plt.rcParams["font.family"] = "Arial"
 
+
 def colorMap(num_spc):
-    colors = [(0, 0, 0), (1, 0, 0)] # first color is black, last is red
+    colors = [(0, 0, 0), (1, 0, 0)]  # first color is black, last is red
     cm = LinearSegmentedColormap.from_list(
-            "Custom", colors, N=20)
-    cols = cm(np.linspace(0,1,int(num_spc/2) ))
+        "Custom", colors, N=20)
+    cols = cm(np.linspace(0, 1, int(num_spc/2)))
     return cols
+
+
+colors = ["#000000",  "#EF0000", "#336699",  "#3BC371", "#FEC211",  "#666699", "#FF6666",   "#CC6600", "#6699CC", "#99867A", "#999999", "#6B67BC", "#009999"]
