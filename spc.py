@@ -1,5 +1,4 @@
 import argparse
-from locale import normalize
 from matplotlib import pyplot as plt
 import pandas as pd
 from matplotlib.ticker import AutoMinorLocator
