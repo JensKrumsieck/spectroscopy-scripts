@@ -24,7 +24,7 @@ class DataSource:
     q: float = 0
     max: float = 0
 
-    def __init__(self, folder: str, mass: float, molar: float, tfa: float):
+    def __init__(self, folder: str, mass: float, molar: float, tfa: float, vTfa: float = 50):
         self.folder = folder
         self.mass = mass  # weight of substance
         self.molar = molar  # molar mass of substance
@@ -33,6 +33,7 @@ class DataSource:
         self.npVTfa = self.nTfa/self.vTfa  # mol/mL
         self.initialMoles = self.mass/1000/self.molar
         self.moles = self.initialMoles*self.usedPart
+        self.vTfa = vTfa
 
     def loadData(self) -> pd.DataFrame:
         data = []
