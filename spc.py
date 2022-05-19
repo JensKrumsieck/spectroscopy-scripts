@@ -29,7 +29,7 @@ hasLabels = labels != None
 normalize = not args.nonorm
 df = pd.DataFrame()
 for file in paths:
-    df = pd.concat([df, (pd.read_csv(file, header=1, usecols=[0, 1]))], axis=1)
+    df = pd.concat([df, (pd.read_csv(file, header=1, usecols=[0, 1], encoding='latin-1'))], axis=1)
 
 num_spc = int(df.shape[1])
 gmax = 0  # global max
