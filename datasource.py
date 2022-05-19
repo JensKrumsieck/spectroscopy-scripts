@@ -80,13 +80,14 @@ class DataSource:
         plt.savefig("out/titration.svg", dpi=1200)
         return fig, ax
 
-    def calculatePH(self, corr: pd.DataFrame, idx: int, offset: int = 0) -> float:
+    def calculatePH(self, corr: pd.DataFrame, idx: int, offset: int = 0, usePH = True) -> float:
         sorets_y = corr.iloc[idx].iloc[1::2]
         # drop first two entries
         x_mlTFA = np.arange(0, len(sorets_y), 1)
-        x_V = 50 + x_mlTFA
-        x_nTFA = x_mlTFA * self.npVTfa
-        x_cTFA = x_nTFA/x_V
+        x_V = (50 + x_mlTFA) /1000 # L
+        x_nTFA = x_mlTFA * self.npVTfa # ml * mol/mL
+        x_cTFA = x_nTFA/x_V # mol/L
+        print(x_cTFA)
         x = -np.log10(x_cTFA)
         x = x[:-1]
         sorets_y = sorets_y[:-1]
@@ -94,9 +95,10 @@ class DataSource:
         if(lol % 2 == 0):
             lol = lol-1
         sorets_y_sm = savgol_filter(sorets_y, lol, 4)  # smooth
-        x = 0.443141*np.exp((x-3.27759)/1.09351)  # correction with calculated fit to pH
+        if usePH: x = 0.443141*np.exp((x-3.27759)/1.09351)  # correction with calculated fit to pH
         fig, ax = plt.subplots()
-        ax.set_xlabel("pH")
+        if usePH: ax.set_xlabel("pH")
+        else: ax.set_xlabel("-log[TFA]")
         ax.set_ylabel("$\mathregular{\epsilon}$ /$\mathregular{L mol^{-1}cm^{-1}}$")
         plt.plot(x, sorets_y, label="data")
         plt.plot(x, sorets_y_sm, label="smoothed data")
