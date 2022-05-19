@@ -95,7 +95,7 @@ class DataSource:
         if(lol % 2 == 0):
             lol = lol-1
         sorets_y_sm = savgol_filter(sorets_y, lol, 4)  # smooth
-        if usePH: x = 0.443141*np.exp((x-3.27759)/1.09351)  # correction with calculated fit to pH
+        if usePH: x = 0.364+0.03822*np.exp((x+0.68451)/1.20156)  # correction with calculated fit to pH
         fig, ax = plt.subplots()
         if usePH: ax.set_xlabel("pH")
         else: ax.set_xlabel("-log[TFA]")
