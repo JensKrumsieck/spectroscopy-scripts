@@ -6,6 +6,7 @@ import pandas as pd
 from natsort import humansorted
 from scipy.signal import savgol_filter
 from settings import colorMap
+from util import applyAxisSettings
 
 # constants
 MTfa = 114.02  # g/mol, molar mass of TFA
@@ -73,9 +74,7 @@ class DataSource:
             x = corr.iloc[:, i]
             y = corr.iloc[:, i+1]
             plt.plot(x, y, color=cols[int(i/2)])
-        ax.set_xlim(250, 1100)
-        ax.set_ylim(0, self.max + 0.1*self.max)
-        ax.set_xlabel("$\mathregular{\lambda}$ /nm")
+        applyAxisSettings(ax, self.max, False)
         ax.set_ylabel("$\mathregular{\epsilon}$ /$\mathregular{L mol^{-1}cm^{-1}}$")
         plt.savefig("out/titration.png", dpi=1200)
         plt.savefig("out/titration.svg", dpi=1200)
